@@ -56,7 +56,8 @@ def get_movie_by_id_service(db: Session, movie_id: int):
         if s.ticket_type:
             ticket_types_dict[s.ticket_type.id] = {
                 "id": s.ticket_type.id,
-                "name": s.ticket_type.name
+                "name": s.ticket_type.name,
+                "base_price": s.ticket_type.base_price
             }
 
     ticket_types = list(ticket_types_dict.values())
