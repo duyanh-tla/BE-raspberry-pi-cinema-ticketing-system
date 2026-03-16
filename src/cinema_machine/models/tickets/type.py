@@ -7,7 +7,9 @@ class TicketType(Base):
     __tablename__ = 'ticket_types'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable=False)
+    base_price = Column(Integer, nullable=False)
     description = Column(Text)
+    
 
     theater_rooms = relationship(
         "TheaterRoom",
