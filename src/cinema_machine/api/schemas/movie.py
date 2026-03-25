@@ -1,11 +1,21 @@
-from pydantic import BaseModel
-from datetime import date
+from pydantic import BaseModel, Field
 from typing import Optional, List
 from api.schemas.category import CategorySchema
 from api.schemas.type import TicketTypeSchema
 from api.schemas.trailer import TrailerSchema
 from api.schemas.poster import PosterSchema
 from api.schemas.showtime import ShowtimeSchema
+
+
+# Schema dùng chung
+class MovieBase(BaseModel):
+    id: int
+    title: str
+    age_rating: Optional[str]
+    posters: List[PosterSchema] = Field(default_factory=list)
+    
+    class Config:
+        from_attributes = True
 
 
 class MovieDetailResponse(BaseModel):
@@ -17,53 +27,16 @@ class MovieDetailResponse(BaseModel):
     duration_min: int
     status: str
 
-    categories: List[CategorySchema] = []
+    categories: List[str] = Field(default_factory=list)
 
-    ticket_types: List[TicketTypeSchema] = []
+    ticket_types: List[TicketTypeSchema] = Field(default_factory=list)
 
-    trailers: List[TrailerSchema] = []
+    posters: List[PosterSchema] = Field(default_factory=list)
+    
+    trailers: List[TrailerSchema] = Field(default_factory=list)
 
-    posters: List[PosterSchema] = []
-
-    showtimes: List[ShowtimeSchema] = []
+    showtimes: List[ShowtimeSchema] = Field(default_factory=list)
     
     class Config:
         from_attributes = True
-        
-        
-        
-
-
-
-
-
-
-# Schema dùng chung
-class MovieBase(BaseModel):
-    title: str
-    age_rating: Optional[str]
-    duration_min: int
-    description: Optional[str] = None
-    release_date: date
-    end_date: date
-
-# Schema cho POST (Create)
-class MovieCreate(MovieBase):
-    pass
-
-# Schema cho PUT (Update) có thể cho phép update một phần
-class MovieUpdate(BaseModel):
-    title: Optional[str] = None
-    age_rating: Optional[str] = None
-    duration_min: Optional[int] = None
-    description: Optional[str] = None
-    release_date: Optional[date] = None
-    end_date: Optional[date] = None
-
-# # Schema cho Response (chứa id và status từ property)
-# class MovieResponse(MovieBase):
-#     id: int
-#     status: str
-
-#     class Config:
-#         from_attributes = True
+    
