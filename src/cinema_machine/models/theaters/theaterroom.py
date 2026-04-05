@@ -12,7 +12,7 @@ class TheaterRoom(Base):
     # Quan hệ với Showtimes (One-to-Many)
     showtimes = relationship(
         "Showtime", 
-        back_populates="theater_room"
+        back_populates="theater_rooms"
     )
     
     # Quan hệ với TicketType (Many-to-Many)
