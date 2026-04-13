@@ -15,3 +15,4 @@ class Showtime(Base):
     theater_room = relationship("TheaterRoom", back_populates="showtimes")
     time_slot = relationship("TimeSlot", back_populates="showtimes")
     ticket_type = relationship("TicketType", back_populates="showtimes")
+    bookings = relationship("Booking", back_populates="showtime")

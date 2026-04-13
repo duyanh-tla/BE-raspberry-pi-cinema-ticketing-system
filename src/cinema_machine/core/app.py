@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from api.routes import movie
+from api.routes import movie, showtime, theaterroom, otp, booking
 from core.startup import run_startup
 
 app = FastAPI(
@@ -13,6 +13,11 @@ def startup_event():
     run_startup()
 
 app.include_router(movie.router)
+app.include_router(showtime.router)
+app.include_router(theaterroom.router)
+app.include_router(otp.router)
+app.include_router(booking.router)
+
 
 @app.get("/")
 def root():

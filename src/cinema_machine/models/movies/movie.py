@@ -9,28 +9,20 @@ class Movie(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=False)
     age_rating = Column(String(10), nullable=False) # do_tuoi
+    actors = Column(Text)
     duration_min = Column(Integer, nullable=False) # thoi_luong_phim
     description = Column(Text)
     release_date = Column(Date)
     end_date = Column(Date)
 
-    # Quan hệ Many-to-Many
-    categories = relationship(
-        "Category", 
+    categories = relationship("Category", 
         secondary=movie_category_association, 
         back_populates="movies"
     )
     
-    #  Quan hệ với Poster
     posters = relationship("Poster", back_populates="movie")
-    
-    #  Quan hệ với Trailer
     trailers = relationship("Trailer", back_populates="movie")
-    
-    showtimes = relationship(
-        "Showtime", 
-        back_populates="movie"
-    )
+    showtimes = relationship("Showtime", back_populates="movie")
     
     @property
     def status(self):

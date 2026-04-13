@@ -9,15 +9,9 @@ class TheaterRoom(Base):
     name = Column(String(100), nullable=False) # ten_phong_chieu
     seat_capacity = Column(Integer, nullable=False) # so_luong_ghe
 
-    # Quan hệ với Showtimes (One-to-Many)
-    showtimes = relationship(
-        "Showtime", 
-        back_populates="theater_rooms"
-    )
-    
-    # Quan hệ với TicketType (Many-to-Many)
-    ticket_type = relationship(
-        "TicketType",
+    showtimes = relationship("Showtime", back_populates="theater_room")
+    seats = relationship("Seat", back_populates="theater_room")
+    ticket_types = relationship("TicketType",
         secondary=theater_room_ticket_type_association,
         back_populates="theater_rooms"
     )

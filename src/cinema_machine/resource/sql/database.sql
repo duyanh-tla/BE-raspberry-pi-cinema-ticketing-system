@@ -3,6 +3,10 @@ Use cinemamanagement;
 Drop Database cinemamanagement;
 Use shoesshop;
 
+DELETE FROM showtimes WHERE id > 0;
+
+ALTER TABLE showtimes AUTO_INCREMENT = 1;
+
 
 -- Add Time_Slots --
 INSERT INTO time_slots(id, start_time) VALUES
@@ -31,10 +35,90 @@ INSERT INTO ticket_types(name, base_price) VALUES
 ("IMAX 2D Phụ Đề", 195000), ("IMAX 2D Lồng Tiếng", 195000),
 ("IMAX 3D Phụ Đề", 250000), ("IMAX 3D Lồng Tiếng", 250000);
 
+
 -- Add Theater_Rooms --
 INSERT INTO theater_rooms(name, seat_capacity) VALUES 
 ("A",72), ("B", 64), ("C", 100), ("D", 144),
 ("IMAX01", 144), ("IMAX02", 144);
+
+
+-- Add Seats --
+INSERT INTO seats(theater_room_id, seat_row, seat_number) VALUES 
+-- Room A
+(1,"A",1),(1,"A",2),(1,"A",3),(1,"A",4),(1,"A",5),(1,"A",6),(1,"A",7),(1,"A",8),
+(1,"B",1),(1,"B",2),(1,"B",3),(1,"B",4),(1,"B",5),(1,"B",6),(1,"B",7),(1,"B",8),
+(1,"C",1),(1,"C",2),(1,"C",3),(1,"C",4),(1,"C",5),(1,"C",6),(1,"C",7),(1,"C",8),
+(1,"D",1),(1,"D",2),(1,"D",3),(1,"D",4),(1,"D",5),(1,"D",6),(1,"D",7),(1,"D",8),
+(1,"E",1),(1,"E",2),(1,"E",3),(1,"E",4),(1,"E",5),(1,"E",6),(1,"E",7),(1,"E",8),
+(1,"F",1),(1,"F",2),(1,"F",3),(1,"F",4),(1,"F",5),(1,"F",6),(1,"F",7),(1,"F",8),
+(1,"G",1),(1,"G",2),(1,"G",3),(1,"G",4),(1,"G",5),(1,"G",6),(1,"G",7),(1,"G",8),
+(1,"H",1),(1,"H",2),(1,"H",3),(1,"H",4),(1,"H",5),(1,"H",6),(1,"H",7),(1,"H",8),
+(1,"J",1),(1,"J",2),(1,"J",3),(1,"J",4),(1,"J",5),(1,"J",6),(1,"J",7),(1,"J",8),
+
+-- Room B
+(2,"A",1),(2,"A",2),(2,"A",3),(2,"A",4),(2,"A",5),(2,"A",6),(2,"A",7),(2,"A",8),
+(2,"B",1),(2,"B",2),(2,"B",3),(2,"B",4),(2,"B",5),(2,"B",6),(2,"B",7),(2,"B",8),
+(2,"C",1),(2,"C",2),(2,"C",3),(2,"C",4),(2,"C",5),(2,"C",6),(2,"C",7),(2,"C",8),
+(2,"D",1),(2,"D",2),(2,"D",3),(2,"D",4),(2,"D",5),(2,"D",6),(2,"D",7),(2,"D",8),
+(2,"E",1),(2,"E",2),(2,"E",3),(2,"E",4),(2,"E",5),(2,"E",6),(2,"E",7),(2,"E",8),
+(2,"F",1),(2,"F",2),(2,"F",3),(2,"F",4),(2,"F",5),(2,"F",6),(2,"F",7),(2,"F",8),
+(2,"G",1),(2,"G",2),(2,"G",3),(2,"G",4),(2,"G",5),(2,"G",6),(2,"G",7),(2,"G",8),
+(2,"H",1),(2,"H",2),(2,"H",3),(2,"H",4),(2,"H",5),(2,"H",6),(2,"H",7),(2,"H",8),
+
+-- Room C --
+(3,"A",1),(3,"A",2),(3,"A",3),(3,"A",4),(3,"A",5),(3,"A",6),(3,"A",7),(3,"A",8),(3,"A",9),(3,"A",10),
+(3,"B",1),(3,"B",2),(3,"B",3),(3,"B",4),(3,"B",5),(3,"B",6),(3,"B",7),(3,"B",8),(3,"B",9),(3,"B",10),
+(3,"C",1),(3,"C",2),(3,"C",3),(3,"C",4),(3,"C",5),(3,"C",6),(3,"C",7),(3,"C",8),(3,"C",9),(3,"C",10),
+(3,"D",1),(3,"D",2),(3,"D",3),(3,"D",4),(3,"D",5),(3,"D",6),(3,"D",7),(3,"D",8),(3,"D",9),(3,"D",10),
+(3,"E",1),(3,"E",2),(3,"E",3),(3,"E",4),(3,"E",5),(3,"E",6),(3,"E",7),(3,"E",8),(3,"E",9),(3,"E",10),
+(3,"F",1),(3,"F",2),(3,"F",3),(3,"F",4),(3,"F",5),(3,"F",6),(3,"F",7),(3,"F",8),(3,"F",9),(3,"F",10),
+(3,"G",1),(3,"G",2),(3,"G",3),(3,"G",4),(3,"G",5),(3,"G",6),(3,"G",7),(3,"G",8),(3,"G",9),(3,"G",10),
+(3,"H",1),(3,"H",2),(3,"H",3),(3,"H",4),(3,"H",5),(3,"H",6),(3,"H",7),(3,"H",8),(3,"H",9),(3,"H",10),
+(3,"J",1),(3,"J",2),(3,"J",3),(3,"J",4),(3,"J",5),(3,"J",6),(3,"J",7),(3,"J",8),(3,"J",9),(3,"J",10),
+(3,"K",1),(3,"K",2),(3,"K",3),(3,"K",4),(3,"K",5),(3,"K",6),(3,"K",7),(3,"K",8),(3,"K",9),(3,"K",10);
+
+-- Room D --
+INSERT INTO seats(theater_room_id, seat_row, seat_number)
+SELECT 4, r.seat_row, n.seat_number
+FROM (
+    SELECT 'A' AS seat_row UNION SELECT 'B' UNION SELECT 'C' UNION SELECT 'D'
+    UNION SELECT 'E' UNION SELECT 'F' UNION SELECT 'G' UNION SELECT 'H'
+    UNION SELECT 'J' UNION SELECT 'K' UNION SELECT 'L' UNION SELECT 'M'
+) r
+CROSS JOIN (
+    SELECT 1 AS seat_number UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5
+    UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10
+    UNION SELECT 11 UNION SELECT 12
+) n;
+
+-- Room IMAX01 --
+INSERT INTO seats(theater_room_id, seat_row, seat_number)
+SELECT 5, r.seat_row, n.seat_number
+FROM (
+    SELECT 'A' AS seat_row UNION SELECT 'B' UNION SELECT 'C' UNION SELECT 'D'
+    UNION SELECT 'E' UNION SELECT 'F' UNION SELECT 'G' UNION SELECT 'H'
+    UNION SELECT 'J' UNION SELECT 'K' UNION SELECT 'L' UNION SELECT 'M'
+) r
+CROSS JOIN (
+    SELECT 1 AS seat_number UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5
+    UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10
+    UNION SELECT 11 UNION SELECT 12
+) n;
+
+-- Room IMAX02 --
+INSERT INTO seats(theater_room_id, seat_row, seat_number)
+SELECT 6, r.seat_row, n.seat_number
+FROM (
+    SELECT 'A' AS seat_row UNION SELECT 'B' UNION SELECT 'C' UNION SELECT 'D'
+    UNION SELECT 'E' UNION SELECT 'F' UNION SELECT 'G' UNION SELECT 'H'
+    UNION SELECT 'J' UNION SELECT 'K' UNION SELECT 'L' UNION SELECT 'M'
+) r
+CROSS JOIN (
+    SELECT 1 AS seat_number UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5
+    UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10
+    UNION SELECT 11 UNION SELECT 12
+) n;
+
 
 -- Add Theater_Room_Ticket_Type --
 INSERT INTO theater_room_ticket_type(theater_room_id, ticket_type_id) VALUES
@@ -61,78 +145,79 @@ INSERT INTO categories (name) VALUE ("Ly Kì");
 -- Add Movie Đang chiếu --
 INSERT INTO movies (title, age_rating, duration_min, description, release_date, end_date)
 VALUES
-('Tội Phạm 101', 'T18', 110, 'Phim hành động hình sự về thế giới tội phạm nguy hiểm.', '2026-03-13', '2026-05-13'),
+('Tội Phạm 101', 'T18', 110, 'Lấy bối cảnh thành phố Los Angeles đầy nắng và bụi đường, Tội Phạm 101 kể về một tên trộm nữ trang bí ẩn (Chris Hemsworth) với hàng loạt phi vụ táo bạo khiến cảnh sát phải đau đầu. Trong lúc chuẩn bị cho phi vụ lớn nhất của mình, hắn gặp gỡ một nữ nhân viên bảo hiểm (Halle Berry), người cũng đang vật lộn với những lựa chọn trong đời mình. Trong khi đó, một thanh tra (Mark Ruffalo) đã tìm ra quy luật trong chuỗi các vụ án và đang ráo riết truy đuổi tên trộm, khiến cuộc chơi trở nên căng thẳng hơn bao giờ hết. Khi phi vụ định mệnh đến gần, ranh giới giữa kẻ săn đuổi và con mồi dần trở nên mờ nhạt và cả ba buộc phải đối mặt với những lựa chọn khó khăn và không còn cơ hội để quay đầu lại. Bộ phim được chuyển thể từ tiểu thuyết ngắn nổi tiếng cùng tên của Don Winslow, do Bart Layton (tác giả của American Animals, The Imposter) viết kịch bản và đạo diễn. Dàn diễn viên có sự tham gia của Barry Keoghan, Monica Barbaro, Corey Hawkins, Jennifer Jason Leigh và Nick Nolte.', '2026-03-13', '2027-05-13'),
 
-('Quỷ Nhập Tràng 2', 'T18', 126, 'Phần tiếp theo của phim kinh dị về hiện tượng nhập tràng và các nghi lễ tâm linh.', '2026-03-06', '2026-05-06'),
+('Quỷ Nhập Tràng 2', 'T18', 126, 'Quỷ Nhập Tràng 2 là tiền truyện của nhân vật Minh Như, trở về xưởng nhuộm gia đình sau nhiều năm bị xua đuổi. Tại đây, cô phải đối mặt với những hiện tượng ma quái cùng sự thật tàn khốc về cái chết của mẹ và giao ước đẫm máu năm xưa. Ác giả ác báo, liệu Minh Như có thoát khỏi vòng vây của quỷ dữ?', '2026-03-06', '2027-05-06'),
 
-('Hoppers: Cú Nhảy Kỳ Diệu', 'T13', 105, 'Phim hoạt hình phiêu lưu về cuộc hành trình kỳ diệu của một sinh vật nhỏ.', '2026-03-13', '2026-05-13'),
+('Hoppers: Cú Nhảy Kỳ Diệu', 'T13', 105, 'Hoppers xoay quanh Mabel, một cô gái yêu động vật, vô tình tiếp cận công nghệ cho phép chuyển ý thức con người vào cơ thể robot động vật. Nhờ đó, Mabel “nhảy” vào thế giới tự nhiên dưới hình dạng một con hải ly và có thể giao tiếp trực tiếp với các loài khác. Trong hành trình này, cô dần khám phá cách động vật nhìn nhận con người, đồng thời phát hiện những mối nguy đang đe dọa môi trường sống của chúng. Tận dụng công nghệ Nhảy, Mabel đã trở thành cầu nối, mang lại cuộc sống cân bằng cho cả con người và động vật.', '2026-03-13', '2027-05-13'),
 
-('Greenland 2: Đại Di Cư', 'T13', 98, 'Bom tấn thảm họa khi nhân loại phải rời bỏ nơi trú ẩn để sinh tồn sau thiên thạch.', '2026-03-13', '2026-05-13'),
+('Greenland 2: Đại Di Cư', 'T13', 98, 'Bom tấn thảm họa thiên thạch trở lại! 5 năm sau cú va chạm tuyệt diệt, nhân loại một lần nữa đứng trước bờ vực bị xóa sổ. Buộc phải rời khỏi hầm trú ẩn, gia đình Garrity bắt đầu cuộc đại di cư khẩn thiết đầy khắc nghiệt. Một hành trình không đường lui, nơi mỗi bước chân đều là cuộc chiến giành lấy cơ hội tồn tại trong một thế giới đã lụi tàn.', '2026-03-13', '2027-05-13'),
 
-('Cô Dâu!', 'T18', 130, 'Phim kinh dị pha hài kể về một cô dâu với quá khứ bí ẩn.', '2026-03-13', '2026-05-13'),
+('Cô Dâu!', 'T18', 130, 'Một cách tiếp cận táo bạo, phá vỡ mọi khuôn mẫu đối với một trong những câu chuyện hấp dẫn nhất thế giới. Bộ phim theo chân Frankenstein cô đơn (do Chrisitian Bale thủ vai) lên đường đến Chicago những năm 1930 để tìm đến nhà khoa học Dr. Euphronious (Annette Bening – 5 lần đề cử Oscar thủ vai), với hy vọng bà có thể tạo ra một người bạn đồng hành cho mình. Cả hai hồi sinh một cô gái trẻ đã bị sát hại, và Cô Dâu (Buckley thủ vai) đã ra đời. Những gì xảy ra sau đó đã vượt xa mọi tưởng tượng của họ: những vụ giết người, sự chiếm hữu, một phong trào văn hóa hoang dại và cấp tiến cũng như mối tình ngoài vòng pháp luật đầy cuồng nhiệt và bùng nổ!', '2026-03-13', '2027-05-13'),
 
-('Không Còn Chúng Ta', 'T13', 115, 'Phim tình cảm về những mối quan hệ và ký ức đã mất.', '2026-03-06', '2026-05-06'),
+('Không Còn Chúng Ta', 'T13', 115, 'Jeong-won và Eun-ho yêu nhau chân thành và sâu đậm bằng những tất cả những gì họ có ở khoảng thời gian đẹp nhất của thanh xuân. Nhưng tình yêu của tuổi trẻ không tránh khỏi sự non nớt, bồng bột để rồi họ chọn rời xa nhau. Nhiều năm sau gặp lại, họ nhận ra: chính những tháng năm đã yêu và đã đau ấy đã giúp họ trưởng thành hơn, hiểu được tình yêu và biết cách yêu thương hơn. Chỉ tiếc rằng khi ấy, yêu thương này họ không dành cho nhau được nữa…', '2026-03-06', '2027-05-06'),
 
-('Lời Nguyền Thư Viện Mikura', 'T13', 110, 'Phim hoạt hình kỳ ảo về lời nguyền bí ẩn trong thư viện cổ.', '2026-03-06', '2026-05-06'),
+('Lời Nguyền Thư Viện Mikura', 'T13', 110, 'Mikura Mifuyu rất ghét đọc sách lại là con gái của "gia tộc" nhiều đời quản lý một thư viện khổng lồ. Khi những cuốn sách bị đánh cắp, cô bị nuốt chửng vào thế giới của những câu chuyện. Mifuyu buộc phải truy tìm kẻ trộm sách, tìm hiểu về "lời nguyền" cũng như "gia tộc" mà ngay cả cô cũng không hề hay biết. Hành trình phiêu lưu qua "Thế giới sách" chính thức bắt đầu!', '2026-03-06', '2027-05-06'),
 
-('Quốc Bảo', 'T16', 120, 'Phim lịch sử – chính kịch xoay quanh một bảo vật quốc gia.', '2026-03-06', '2026-05-06'),
+('Quốc Bảo', 'T16', 120, 'Kikuo, con trai của một tay xã hội đen, được một diễn viên kịch Kabuki nổi tiếng nhận nuôi và trở thành một diễn viên Onnagata tài năng. Kikuo đi cùng chặng đường nhiều thập kỷ cùng Shunsuke, con ruột của người cha nuôi. Cả hai nếm trải tình huynh đệ, ganh đua và tai tiếng để khẳng định vị trí trên sân khấu Kabuki. Trong bối cảnh Nhật Bản hậu chiến đầy biến động, họ phải đối mặt áp lực gìn giữ nghệ thuật truyền thống và theo đuổi danh hiệu “Báu vật sống của quốc gia”.
+', '2026-03-06', '2027-05-06'),
 
-('Tài', 'T16', 115, 'Phim Việt Nam xoay quanh cuộc đời của Tài và những biến cố trong gia đình và xã hội.', '2026-03-06', '2026-05-06'),
+('Tài', 'T16', 115, 'Tài bất ngờ rơi vào vòng xoáy nguy hiểm vì một khoản nợ tiền khổng lồ. Bị dồn vào đường cùng, Tài buộc phải dấn thân vào những lựa chọn sai lầm khiến gia đình trở thành mục tiêu bị đe dọa. Đằng sau những hành động liều lĩnh ấy là nỗi ám ảnh về người mẹ mà Tài luôn muốn bảo vệ và bù đắp bằng mọi giá. Khi ranh giới giữa đúng và sai ngày càng mong manh, Tài phải đối mặt với câu hỏi lớn nhất của đời mình: liệu lòng hiếu thảo có đủ để biện minh cho con đường anh đang đi.', '2026-03-06', '2027-05-06'),
 
-('Cảm Ơn Người Đã Thức Cùng Tôi', 'K', 105, 'Phim tình cảm – âm nhạc về tình bạn và những người luôn đồng hành trong cuộc sống.', '2026-02-27', '2026-04-27'),
+('Cảm Ơn Người Đã Thức Cùng Tôi', 'K', 105, 'Cảm Ơn Người Đã Thức Cùng Tôi là một hành trình cảm xúc của những người trẻ đi tìm đáp án cho câu hỏi “Ước mơ của bạn là gì?”, để rồi chính họ khi bước vào thế giới trưởng thành dần nhận ra câu hỏi quan trọng nhất là “Mình muốn thực hiện ước mơ đó cùng ai?”', '2026-02-27', '2027-04-27'),
 
-('Thỏ Ơi!!', 'T18', 110, 'Phim hài – hành động với câu chuyện về những nhân vật bí ẩn trong một bữa tiệc đầy hỗn loạn.', '2026-02-10', '2026-04-10');
+('Thỏ Ơi!!', 'T18', 110, 'Phim “Thỏ ơi!!” dự kiến công chiếu trong dịp Tết 2026, thuộc thể loại hài, tâm lý sở trường của Trấn Thành, mang màu sắc trẻ trung với dàn diễn viên mới, tiếp nối tinh thần đem đến cho khán giả những điều vui vẻ, hài hước vào dịp Tết Nguyên đán.', '2026-02-10', '2027-05-10');
 
 -- Add Movie Sắp Chiếu --
 INSERT INTO movies (title, age_rating, duration_min, description, release_date, end_date)
 VALUES
-('Đêm Ngày Xa Mẹ','T13',105,'Phim gia đình cảm động về mối quan hệ mẹ và con.','2026-06-20','2026-07-20'),
+('Đêm Ngày Xa Mẹ','T13',105,'Phim gia đình cảm động về mối quan hệ mẹ và con.','2027-06-20','2027-07-20'),
 
-('Căn Nhà Ký Ức','T13',110,'Phim tâm lý về những ký ức bị lãng quên trong một gia đình.','2026-06-20','2026-07-20'),
+('Căn Nhà Ký Ức','T13',110,'Phim tâm lý về những ký ức bị lãng quên trong một gia đình.','2027-06-20','2027-07-20'),
 
-('Omukade: Con Rết Người','T18',108,'Phim kinh dị Nhật Bản dựa trên truyền thuyết quái vật cổ đại.','2026-06-20','2026-07-20'),
+('Omukade: Con Rết Người','T18',108,'Phim kinh dị Nhật Bản dựa trên truyền thuyết quái vật cổ đại.','2027-06-20','2027-07-20'),
 
-('Bus – Chuyến Xe Một Chiều','T16',115,'Phim kinh dị về chuyến xe định mệnh không có đường quay lại.','2026-06-20','2026-07-20'),
+('Bus – Chuyến Xe Một Chiều','T16',115,'Phim kinh dị về chuyến xe định mệnh không có đường quay lại.','2027-06-20','2027-07-20'),
 
-('La Tiểu Hắc Chiến Ký 2','T13',100,'Phim hoạt hình phiêu lưu tiếp nối câu chuyện của La Tiểu Hắc.','2026-06-20','2026-07-20'),
+('La Tiểu Hắc Chiến Ký 2','T13',100,'Phim hoạt hình phiêu lưu tiếp nối câu chuyện của La Tiểu Hắc.','2027-06-20','2027-07-20'),
 
-('Tiếng Thét 7','T18',112,'Phần tiếp theo của series kinh dị nổi tiếng Scream.','2026-06-20','2026-07-20'),
+('Tiếng Thét 7','T18',112,'Phần tiếp theo của series kinh dị nổi tiếng Scream.','2027-06-20','2027-07-20'),
 
-('Bẫy Tiền','T16',110,'Phim hành động về những phi vụ lừa đảo nguy hiểm.','2026-06-21','2026-07-21'),
+('Bẫy Tiền','T16',110,'Phim hành động về những phi vụ lừa đảo nguy hiểm.','2027-06-21','2027-07-21'),
 
-('Thoát Khỏi Tận Thế','T13',120,'Phim khoa học viễn tưởng về hành trình sinh tồn của nhân loại.','2026-03-19','2026-05-19'),
+('Thoát Khỏi Tận Thế','T13',120,'Phim khoa học viễn tưởng về hành trình sinh tồn của nhân loại.','2027-03-19','2027-05-19'),
 
-('Kung Fu Quái Chưởng','T13',105,'Phim hành động võ thuật hài đến từ Đài Loan.','2026-06-27','2026-07-27'),
+('Kung Fu Quái Chưởng','T13',105,'Phim hành động võ thuật hài đến từ Đài Loan.','2027-06-27','2027-07-27'),
 
-('Project Y: Gái Ngoan Đổi Đời','T16',108,'Phim hành động – tội phạm về cuộc đời hai cô gái.','2026-06-27','2026-07-27'),
+('Project Y: Gái Ngoan Đổi Đời','T16',108,'Phim hành động – tội phạm về cuộc đời hai cô gái.','2027-06-27','2027-07-27'),
 
-('Tứ Hổ Đại Náo','T13',110,'Phim hành động hài với nhóm nhân vật gây náo loạn.','2026-06-27','2026-07-27'),
+('Tứ Hổ Đại Náo','T13',110,'Phim hành động hài với nhóm nhân vật gây náo loạn.','2027-06-27','2027-07-27'),
 
-('Chúng Sẽ Đoạt Mạng','T18',109,'Phim kinh dị về một thế lực bí ẩn truy sát con người.','2026-06-27','2026-07-27'),
+('Chúng Sẽ Đoạt Mạng','T18',109,'Phim kinh dị về một thế lực bí ẩn truy sát con người.','2027-06-27','2027-07-27'),
 
-('Mario Thiên Hà','P',98,'Phim hoạt hình phiêu lưu của Mario trong vũ trụ mới.','2026-06-01','2026-07-01'),
+('Mario Thiên Hà','P',98,'Phim hoạt hình phiêu lưu của Mario trong vũ trụ mới.','2027-06-01','2027-07-01'),
 
-('Hẹn Em Ngày Nhất Thức','T13',105,'Phim tình cảm về những cuộc gặp gỡ định mệnh.','2026-06-03','2026-07-03'),
+('Hẹn Em Ngày Nhất Thức','T13',105,'Phim tình cảm về những cuộc gặp gỡ định mệnh.','2027-06-03','2027-07-03'),
 
-('Song Hỷ Lâm Nguy','T13',108,'Phim hài – gia đình xoay quanh một đám cưới rắc rối.','2026-06-03','2026-07-03'),
+('Song Hỷ Lâm Nguy','T13',108,'Phim hài – gia đình xoay quanh một đám cưới rắc rối.','2027-06-03','2027-07-03'),
 
-('The Conjuring: Xác Ướp','T18',115,'Phim kinh dị thuộc vũ trụ The Conjuring.','2026-06-17','2026-07-17'),
+('The Conjuring: Xác Ướp','T18',115,'Phim kinh dị thuộc vũ trụ The Conjuring.','2027-06-17','2027-07-17'),
 
-('Trùm Sò','T13',104,'Phim hài về những tình huống dở khóc dở cười trong kinh doanh.','2026-06-24','2026-07-24'),
+('Trùm Sò','T13',104,'Phim hài về những tình huống dở khóc dở cười trong kinh doanh.','2027-06-24','2027-07-24'),
 
-('Anh Hùng','T13',112,'Phim hành động về một người đàn ông bình thường trở thành anh hùng.','2026-06-24','2026-07-24'),
+('Anh Hùng','T13',112,'Phim hành động về một người đàn ông bình thường trở thành anh hùng.','2027-06-24','2027-07-24'),
 
-('Đại Tiệc Trăng Máu 8','T16',115,'Phần mới của series hài đen nổi tiếng.','2026-06-30','2026-07-30'),
+('Đại Tiệc Trăng Máu 8','T16',115,'Phần mới của series hài đen nổi tiếng.','2027-06-30','2027-07-30'),
 
-('Michael','T13',130,'Phim tiểu sử về huyền thoại âm nhạc Michael Jackson.','2026-06-26','2026-07-26'),
+('Michael','T13',130,'Phim tiểu sử về huyền thoại âm nhạc Michael Jackson.','2027-06-26','2027-07-26'),
 
-('Mortal Kombat 2','T16',120,'Phần tiếp theo của loạt phim hành động dựa trên game Mortal Kombat.','2026-06-15','2026-07-15'),
+('Mortal Kombat 2','T16',120,'Phần tiếp theo của loạt phim hành động dựa trên game Mortal Kombat.','2027-06-15','2027-07-15'),
 
-('Thời Khắc Công Bố','T13',105,'Phim tâm lý về bí mật được tiết lộ vào phút cuối.','2026-06-20','2026-07-20'),
+('Thời Khắc Công Bố','T13',105,'Phim tâm lý về bí mật được tiết lộ vào phút cuối.','2027-06-20','2027-07-20'),
 
-('Madam Thanh Lạc','T13',110,'Phim cổ trang Việt Nam xoay quanh hai người phụ nữ quyền lực.','2026-06-06','2026-08-06'),
+('Madam Thanh Lạc','T13',110,'Phim cổ trang Việt Nam xoay quanh hai người phụ nữ quyền lực.','2027-06-06','2027-08-06'),
 
-('Supergirl','T13',125,'Bom tấn siêu anh hùng DC về Supergirl.','2026-06-26','2026-08-26');
+('Supergirl','T13',125,'Bom tấn siêu anh hùng DC về Supergirl.','2027-06-26','2027-08-26');
 
 -- Add Phim Ngưng Chiếu --
 INSERT INTO movies (title, age_rating, duration_min, description, release_date, end_date)
@@ -156,6 +241,24 @@ VALUES
 ('Avatar: Fire and Ash', 'T13', 192,
  'Phần tiếp theo trong loạt phim Avatar của James Cameron, giới thiệu bộ tộc Na’vi mới tại Pandora.',
  '2025-12-19', '2026-02-19');
+
+-- Add Actors--
+UPDATE movies
+SET actors = CASE
+    WHEN id = 1 THEN "Chris Hemsworth,Mark Ruffalo,Halle Berry,Barry Keoghan,Monica Barbaro,Nick Nolte"
+    WHEN id = 2 THEN "Quang Tuấn, Khả Như, Vân Dung, Đào Anh Tuấn, Phương Bình, Doãn Quốc Đam, Thanh Hiền, Lê Thúy"
+	WHEN id = 3 THEN "Jon Hamm, Piper Curda, Bobby Moynihan"
+    WHEN id = 4 THEN "
+Amber Rose Revah, Antonio De Lima, Beruce Khan, Gerard Butler, Gina Gangar, Gísli Örn Garðarsson, Megan Jacobs Shrivastava, Mitu Panicucci, Morena Baccarin, Peter Polycarpou, Roman Griffin Davis, Sidsel Siem Koch, Tommie Earl Jenkins, Trond Fausa Aurvåg"
+    WHEN id = 5 THEN "Jessie Buckley, Christian Bale, Annette Bening, Penélope Cruz, Peter Sarsgaard"
+    WHEN id = 6 THEN "Koo Kyo Hwan,Mun Ka Young,Lee Sang Yeob,Lim Jae Hyeok,Shin Jung Keun,Kang Mal Geum"
+    WHEN id = 7 THEN "Kataoka Rin, Tamaki Sora"
+    WHEN id = 8 THEN "Koshiyama Keitatsu, Kurokawa Soya, Mikami Ai"
+    WHEN id = 9 THEN "Mai Tài Phến, Vinh Râu, Long Đẹp Trai, Hồng Ánh, Trần Kim Hải"
+    WHEN id = 10 THEN "Võ Phan Kim Khánh, Trần Doãn Hoàng, Nguyễn Hùng"
+    WHEN id = 11 THEN "Lyly, Pháo, Văn Mai Hương, Quốc Anh, Trấn Thành"
+END
+WHERE id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 
 
 -- Add Movie_Category --
@@ -187,117 +290,32 @@ VALUE
 
 (39,3),(39,4),(39,10),(40,4),(40,12),(40,6);
 
+-- Add Poster --
+INSERT INTO posters(movie_id, name, path) 
+VALUE 
+(1, "Poster Tội Phạm 101", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/p/o/poster-crime.jpg"),
+(2, "Poster Quỷ Nhập Tràng 2 ", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/4/7/470wx700h-qnt.jpg"),
+(3, "Poster Hoppers: Cú Nhảy Kỳ Diệu", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/1800x/71252117777b696995f01934522c402d/h/o/hoppers_-_poster.jpg"),
+(4, "Poster Greenland 2: Đại Di Cư", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/3/image/c5f0a1eff4c394a251036189ccddaacd/3/5/350x495-greenland.jpg"),
+(5, "Poster Cô Dâu!", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/m/a/main_poster_co_dau_1_final.jpg"),
+(6, "Poster Không Còn Chúng Ta", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/4/7/470x700-us.jpg"),
+(7, "Poster Lời Nguyền Thư Viện Mikura", "https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-6/642807022_1416234250543341_8959123062430748192_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=-KgAwc2Ld54Q7kNvwHg5sOV&_nc_oc=AdrksK6AYiscKzG-vwCyDGPPLaCXNJjpHMQmC2ZAetxUG9W2KzMQPwvE-EaJ_iH4tgA&_nc_zt=23&_nc_ht=scontent.fsgn8-3.fna&_nc_gid=Fj0Uo_u0L_FKjq2fH0WHQQ&_nc_ss=7a389&oh=00_Af1kRhoKl03_AN5QsVsaJsj-M1sD42hZiTKnlT8Zoiye0A&oe=69DAA131"),
+(8, "Poster Quốc Bảo", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/3/image/1800x/71252117777b696995f01934522c402d/k/o/kokuho_470x700.jpg"),
+(9, "Poster Tài", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/3/image/1800x/71252117777b696995f01934522c402d/1/2/1200wx1800h-tai.jpg"),
+(10, "Poster Cảm Ơn Người Đã Thức Cùng Tôi", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/m/a/main_condtct_cinema_low.jpg"),
+(11, "Poster Thỏ Ơi!!", "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/t/o/to_poster_official_tiectet_3x4_fa.jpg");
 
--- Add Showtimes --
-INSERT INTO showtimes(movie_id,theater_room_id,type_ticket_id,time_slot_id,dayshow) VALUES
 
--- 16/03
-(1,1,1,900,'2026-03-16'),
-(2,2,1,1115,'2026-03-16'),
-(3,3,1,1330,'2026-03-16'),
-(3,2,2,1545,'2026-03-16'),
-(4,1,1,1800,'2026-03-16'),
-(6,3,1,2015,'2026-03-16'),
-(7,1,1,2230,'2026-03-16'),
-(7,2,2,900,'2026-03-16'),
-(8,3,1,1115,'2026-03-16'),
-(9,1,1,1330,'2026-03-16'),
-(10,2,1,1545,'2026-03-16'),
-(10,3,2,1800,'2026-03-16'),
-(11,1,1,2015,'2026-03-16'),
-(5,5,5,2030,'2026-03-16'), -- IMAX
-(5,6,5,2230,'2026-03-16'), -- IMAX
-
--- 17/03
-(1,2,1,900,'2026-03-17'),
-(2,3,1,1115,'2026-03-17'),
-(3,1,1,1330,'2026-03-17'),
-(3,2,2,1545,'2026-03-17'),
-(4,3,1,1800,'2026-03-17'),
-(6,1,1,2015,'2026-03-17'),
-(7,2,1,2230,'2026-03-17'),
-(7,3,2,900,'2026-03-17'),
-(8,1,1,1115,'2026-03-17'),
-(9,2,1,1330,'2026-03-17'),
-(10,3,1,1545,'2026-03-17'),
-(10,1,2,1800,'2026-03-17'),
-(11,2,1,2015,'2026-03-17'),
-
--- 18/03
-(1,3,1,900,'2026-03-18'),
-(2,1,1,1115,'2026-03-18'),
-(3,2,1,1330,'2026-03-18'),
-(3,3,2,1545,'2026-03-18'),
-(4,1,1,1800,'2026-03-18'),
-(6,2,1,2015,'2026-03-18'),
-(7,3,1,2230,'2026-03-18'),
-(7,1,2,900,'2026-03-18'),
-(8,2,1,1115,'2026-03-18'),
-(9,3,1,1330,'2026-03-18'),
-(10,1,1,1545,'2026-03-18'),
-(10,2,2,1800,'2026-03-18'),
-(11,3,1,2015,'2026-03-18'),
-
--- 19/03
-(1,1,1,900,'2026-03-19'),
-(2,2,1,1115,'2026-03-19'),
-(3,3,1,1330,'2026-03-19'),
-(3,1,2,1545,'2026-03-19'),
-(4,2,1,1800,'2026-03-19'),
-(6,3,1,2015,'2026-03-19'),
-(7,1,1,2230,'2026-03-19'),
-(7,2,2,900,'2026-03-19'),
-(8,3,1,1115,'2026-03-19'),
-(9,1,1,1330,'2026-03-19'),
-(10,2,1,1545,'2026-03-19'),
-(10,3,2,1800,'2026-03-19'),
-(11,1,1,2015,'2026-03-19'),
-
--- 20/03
-(1,2,1,900,'2026-03-20'),
-(2,3,1,1115,'2026-03-20'),
-(3,1,1,1330,'2026-03-20'),
-(3,2,2,1545,'2026-03-20'),
-(4,3,1,1800,'2026-03-20'),
-(6,1,1,2015,'2026-03-20'),
-(7,2,1,2230,'2026-03-20'),
-(7,3,2,900,'2026-03-20'),
-(8,1,1,1115,'2026-03-20'),
-(9,2,1,1330,'2026-03-20'),
-(10,3,1,1545,'2026-03-20'),
-(10,1,2,1800,'2026-03-20'),
-(11,2,1,2015,'2026-03-20'),
-
--- 21/03
-(1,3,1,900,'2026-03-21'),
-(2,1,1,1115,'2026-03-21'),
-(3,2,1,1330,'2026-03-21'),
-(3,3,2,1545,'2026-03-21'),
-(4,1,1,1800,'2026-03-21'),
-(6,2,1,2015,'2026-03-21'),
-(7,3,1,2230,'2026-03-21'),
-(7,1,2,900,'2026-03-21'),
-(8,2,1,1115,'2026-03-21'),
-(9,3,1,1330,'2026-03-21'),
-(10,1,1,1545,'2026-03-21'),
-(10,2,2,1800,'2026-03-21'),
-(11,3,1,2015,'2026-03-21'),
-
--- 22/03
-(1,1,1,900,'2026-03-22'),
-(2,2,1,1115,'2026-03-22'),
-(3,3,1,1330,'2026-03-22'),
-(3,1,2,1545,'2026-03-22'),
-(4,2,1,1800,'2026-03-22'),
-(6,3,1,2015,'2026-03-22'),
-(7,1,1,2230,'2026-03-22'),
-(7,2,2,900,'2026-03-22'),
-(8,3,1,1115,'2026-03-22'),
-(9,1,1,1330,'2026-03-22'),
-(10,2,1,1545,'2026-03-22'),
-(10,3,2,1800,'2026-03-22'),
-(11,1,1,2015,'2026-03-22'),
-
--- IMAX suất cuối
-(5,5,5,1800,'2026-03-22'); 
-
+INSERT INTO trailers(movie_id, name, path) 
+VALUE 
+(1, "Trailer Tội Phạm 101", "https://www.youtube.com/watch?v=TxY9GfEEMOI"),
+(2, "Trailer Quỷ Nhập Tràng 2 ", "https://www.youtube.com/watch?v=q0UWKBzFFxQ"),
+(3, "Trailer Hoppers: Cú Nhảy Kỳ Diệu", "https://www.youtube.com/watch?v=mRSpJwMp6LM"),
+(4, "Trailer Greenland 2: Đại Di Cư", "https://www.youtube.com/watch?v=h-LQ-kWefX4"),
+(5, "Trailer Cô Dâu!", "https://www.youtube.com/watch?v=HYIOdcSGON4"),
+(6, "Trailer Không Còn Chúng Ta", "https://www.youtube.com/watch?v=DltytoKP7Rg"),
+(7, "Trailer Lời Nguyền Thư Viện Mikura", "https://www.youtube.com/watch?v=rRA7t2VBvPU"),
+(8, "Trailer Quốc Bảo", "https://www.youtube.com/watch?v=v619uUq9pPs"),
+(9, "Trailer Tài", "https://www.youtube.com/watch?v=z8H4miEhi-4"),
+(10, "Trailer Cảm Ơn Người Đã Thức Cùng Tôi", "https://www.youtube.com/watch?v=uf2oOeJ-Z3s&list=RDuf2oOeJ-Z3s&start_radio=1"),
+(11, "Trailer Thỏ Ơi!!", "https://www.youtube.com/watch?v=j1aBd2_GH48");

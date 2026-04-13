@@ -7,5 +7,4 @@ class TimeSlot(Base):
     id = Column(Integer, primary_key=True, autoincrement=False)
     start_time = Column(String(5), nullable=False) # gio_bat_dau
     
-    # Quan hệ với Showtimes (One-to-Many)
     showtimes = relationship("Showtime", back_populates="time_slot")

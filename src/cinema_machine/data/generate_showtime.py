@@ -1,71 +1,107 @@
 from datetime import date, timedelta
 import random
 
-TOTAL_SHOWTIMES = 1000
-IMAX_COUNT = 100
+TOTAL_SHOWTIMES = 2000
 
 movies = list(range(1, 12))
 animation_movies = [3, 7, 10]
 IMAX_MOVIE = 5
 
-normal_rooms = [1, 2, 3]
+normal_rooms = [1, 2, 3, 4]
 imax_rooms = [5, 6]
 
 time_slots = [
-    800, 915, 1030, 1145,
-    1300, 1415, 1530, 1645,
-    1800, 1915, 2030, 2145, 2300
+    800, 915, 1030, 1145, 1300, 1415,
+    1530, 1645, 1800, 1915, 2030, 2145, 2300
 ]
 
-start_date = date.today() + timedelta(days=1)
+start_date = date.today()
 days = [start_date + timedelta(days=i) for i in range(30)]
 
 showtimes = []
+used_slots = set()         # (room, ts, day)
+used_movie_slots = set()   # (movie, ts, day)
 
-# ================= TẠO FULL SLOT =================
-normal_slots = []
+# ================= TICKET =================
+TICKET_2D_SUB = 1
+TICKET_2D_DUB = 2
+TICKET_IMAX = 5
+
+def get_normal_ticket(movie):
+    if movie in animation_movies:
+        return random.choice([TICKET_2D_SUB, TICKET_2D_DUB])
+    return TICKET_2D_SUB
+
+def add_show(movie, room, ts, d, ticket):
+    key1 = (room, ts, d)
+    key2 = (movie, ts, d)
+
+    if key1 in used_slots:
+        return False
+    if key2 in used_movie_slots:
+        return False
+
+    used_slots.add(key1)
+    used_movie_slots.add(key2)
+    showtimes.append((movie, room, ticket, ts, d))
+    return True
+
+# ================= PHASE 1 =================
 for d in days:
-    for r in normal_rooms:
-        for ts in time_slots:
-            normal_slots.append((r, ts, d))
 
-imax_slots = []
-for d in days:
-    for r in imax_rooms:
-        for ts in time_slots:
-            imax_slots.append((r, ts, d))
+    # IMAX: đúng 5 suất/ngày, không trùng giờ
+    imax_slots = random.sample(time_slots, 5)
+    for ts in imax_slots:
+        room = random.choice(imax_rooms)
+        add_show(IMAX_MOVIE, room, ts, d, TICKET_IMAX)
 
-random.shuffle(normal_slots)
-random.shuffle(imax_slots)
+    # phim thường: ≥ 4 suất
+    for movie in movies:
+        if movie == IMAX_MOVIE:
+            continue
 
-# ================= IMAX =================
-for i in range(IMAX_COUNT):
-    r, ts, d = imax_slots[i]
-    showtimes.append((IMAX_MOVIE, r, 5, ts, d))
+        slots = random.sample(time_slots, 4)
+        for ts in slots:
+            room = random.choice(normal_rooms)
+            add_show(movie, room, ts, d, get_normal_ticket(movie))
 
-# ================= NORMAL =================
-base = (TOTAL_SHOWTIMES - IMAX_COUNT) // len(movies)
-extra = (TOTAL_SHOWTIMES - IMAX_COUNT) % len(movies)
+# ================= PHASE 2 =================
+all_slots = [
+    (r, ts, d)
+    for d in days
+    for r in normal_rooms + imax_rooms
+    for ts in time_slots
+]
 
-movie_quota = {m: base for m in movies}
-for m in movies[:extra]:
-    movie_quota[m] += 1
+random.shuffle(all_slots)
 
-for movie in movies:
-    if movie == IMAX_MOVIE:
+for r, ts, d in all_slots:
+    if len(showtimes) >= TOTAL_SHOWTIMES:
+        break
+
+    if (r, ts, d) in used_slots:
         continue
 
-    quota = movie_quota[movie]
+    # ===== IMAX =====
+    if r in imax_rooms:
+        # đếm số suất IMAX trong ngày
+        imax_count_today = sum(
+            1 for m, rr, _, _, dd in showtimes
+            if dd == d and rr in imax_rooms
+        )
 
-    for _ in range(quota):
-        r, ts, d = normal_slots.pop()
+        if imax_count_today >= 5:
+            continue  # không cho vượt 5 suất/ngày
 
-        if movie in animation_movies and random.random() < 0.4:
-            ticket = 2
-        else:
-            ticket = 1
+        movie = IMAX_MOVIE
+        ticket = TICKET_IMAX
 
-        showtimes.append((movie, r, ticket, ts, d))
+    # ===== phòng thường =====
+    else:
+        movie = random.choice([m for m in movies if m != IMAX_MOVIE])
+        ticket = get_normal_ticket(movie)
+
+    add_show(movie, r, ts, d, ticket)
 
 # ================= EXPORT =================
 values = [
@@ -81,5 +117,4 @@ sql += ",\n".join(values) + ";"
 with open("src/cinema_machine/resource/sql/showtimes.sql", "w", encoding="utf-8") as f:
     f.write(sql)
 
-print("✅ Done: 1000 showtimes (balanced & no conflict)")
-
+print(f"✅ Done: {len(showtimes)} showtimes")

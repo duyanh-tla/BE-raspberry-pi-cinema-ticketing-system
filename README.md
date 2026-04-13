@@ -10,3 +10,6 @@ python .\src\cinema_machine\data\generate_showtime.py
 
 then run sql in 
 src/cinema_machine/resource/sql/showtimes.sql
+
+demo gmail otp
+python .\src\cinema_machine\demo\otpcode.py

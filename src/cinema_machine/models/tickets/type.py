@@ -11,10 +11,9 @@ class TicketType(Base):
     description = Column(Text)
     
 
-    theater_rooms = relationship(
-        "TheaterRoom",
+    theater_rooms = relationship("TheaterRoom",
         secondary=theater_room_ticket_type_association,
-        back_populates="ticket_type"
+        back_populates="ticket_types"
     )
     
     showtimes = relationship("Showtime", back_populates="ticket_type")
